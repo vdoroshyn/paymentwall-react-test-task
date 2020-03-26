@@ -12,6 +12,10 @@ class CountrySelector extends Component {
   }
 
   render() {
+    if (this.props.isFormSubmitted) {
+      return null;
+    }
+    
     const countriesByName = this.props.countries.map(country => {
       return (
         <option key={ country.alpha2Code } value={ country.alpha2Code }>
@@ -22,7 +26,7 @@ class CountrySelector extends Component {
 
     return (
       <select onChange={ this.handleChange }>
-        <option value=""></option>
+        <option value="empty">Select a Country</option>
         { countriesByName }
       </select>
     )
@@ -31,9 +35,10 @@ class CountrySelector extends Component {
 
 const mapStateToProps = (state) => {
   return {
-    countries: state.countries
+    countries: state.countries.countries,
+    isFormSubmitted: state.form.isFormSubmitted
   }
-}
+};
 
 const mapDispatchToProps = (dispatch) => {
   return {
@@ -42,6 +47,6 @@ const mapDispatchToProps = (dispatch) => {
     },
     getCountries: () => dispatch(getCountries())
   }
-}
+};
 
 export default connect(mapStateToProps, mapDispatchToProps)(CountrySelector);

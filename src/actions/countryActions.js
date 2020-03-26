@@ -1,6 +1,12 @@
+import { 
+  UPDATE_SELECTED_COUNTRY,
+  GET_COUNTRIES_SUCCESS,
+  GET_COUNTRIES_ERROR
+} from "../actions/actionTypes";
+
 export const updateSelectedCountry = (countryCode) => {
   return {
-    type: 'UPDATE_SELECTED_COUNTRY',
+    type: UPDATE_SELECTED_COUNTRY,
     countryCode
   }
 };
@@ -12,9 +18,9 @@ export const getCountries = () => {
     fetch(countriesURL)
       .then(response => response.json())
       .then(countries => {
-        dispatch({ type: 'GET_COUNTRIES', countries })
+        dispatch({ type: GET_COUNTRIES_SUCCESS, countries })
       }).catch((err) => {
-        dispatch({ type: 'GET_COUNTRIES_ERROR', err })
+        dispatch({ type: GET_COUNTRIES_ERROR, err })
       })
   }
 };
