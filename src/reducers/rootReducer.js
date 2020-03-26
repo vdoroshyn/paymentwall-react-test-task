@@ -4,7 +4,6 @@ const initialState = {
 };
 
 export const rootReducer = (state = initialState, action) => {
-  console.log(action)
   switch (action.type) {
     case 'UPDATE_SELECTED_COUNTRY':
       return {
