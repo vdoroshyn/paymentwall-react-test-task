@@ -1,12 +1,12 @@
 import React, { Component } from 'react';
 import './App.css';
-import CountrySelector from './components/CountrySelector';
-import PaymentForm from './components/PaymentForm';
+import CountrySelector from './components/CountrySelector/CountrySelector';
+import PaymentForm from './components/PaymentForm/PaymentForm';
 
 class App extends Component {
   render() {
     return (
-      <div>
+      <div className="App">
         <CountrySelector />
         <PaymentForm />
       </div>

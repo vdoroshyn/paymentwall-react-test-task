@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { connect } from 'react-redux';
-import { updateSelectedCountry, getCountries } from '../actions/countryActions';
+import { updateSelectedCountry, getCountries } from '../../actions/countryActions';
+import './CountrySelector.css';
 
 class CountrySelector extends Component {
   componentDidMount() {
@@ -25,7 +26,7 @@ class CountrySelector extends Component {
     });
 
     return (
-      <select onChange={ this.handleChange }>
+      <select className="CountrySelector" onChange={ this.handleChange }>
         <option value="empty">Select a Country</option>
         { countriesByName }
       </select>

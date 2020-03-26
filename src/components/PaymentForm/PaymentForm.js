@@ -1,7 +1,8 @@
 import React, { Component } from "react";
 import { connect } from 'react-redux';
-import { sanctionedCountriesList } from '../sanctionedCountriesList';
-import { changeIsFormSubmitted } from '../actions/formActions';
+import { sanctionedCountriesList } from '../../sanctionedCountriesList';
+import { changeIsFormSubmitted } from '../../actions/formActions';
+import './PaymentForm.css';
 
 const nameRGEX    = /^[a-zA-Z\s]+$/;
 const cardRGEX    = /^[0-9\s]+$/;
@@ -31,17 +32,17 @@ class PaymentForm extends Component {
     });
   }
 
-  setError = (errorField) => {
+  setError = (errorField, isValid) => {
+    const error = isValid ? null : 'The field is not valid';
+
     this.setState({
-      [errorField]: 'The field is not valid'
+      [errorField]: error
     });
   }
 
   isFieldValid = (regx, value, errorField) => {
     const isValid = regx.test(value);
-    if (!isValid) {
-      this.setError(errorField)
-    }
+    this.setError(errorField, isValid)
 
     return isValid;
   }
@@ -78,7 +79,7 @@ class PaymentForm extends Component {
   render() {
     if (this.props.isFormSubmitted) {
       return (
-        <div>Payment is successful</div>
+        <div className="payment-success">Payment is successful!</div>
       )
     }
 
@@ -92,28 +93,36 @@ class PaymentForm extends Component {
     );
     
     const showForm = (isCountrySanctioned)?
-      <div>We are sorry, the service is not supported at the moment.</div> :
-      <form onSubmit={ this.handleSubmit }>
-        <label htmlFor="cardholderName">Full Name</label>
-        <input type="text" id="cardholderName" value={this.state.cardholderName} onChange={ this.handleChange }/>
-        { this.state.cardholderNameError && <div>{ this.state.cardholderNameError }</div>}
+      <div className="sorry-msg">We are sorry, the service is not supported at the moment.</div> :
+      <form className="payment-form" onSubmit={ this.handleSubmit }>
+        <div className="field-control">
+          <label htmlFor="cardholderName">Full Name</label>
+          <input type="text" id="cardholderName" value={this.state.cardholderName} onChange={ this.handleChange }/>
+          { this.state.cardholderNameError && <div className="field-error">{ this.state.cardholderNameError }</div>}
+        </div>
 
-        <label htmlFor="cardNumber">Card Number</label>
-        <input type="text" id="cardNumber" value={this.state.cardNumber} onChange={ this.handleChange }/>
-        { this.state.cardNumberError && <div>{ this.state.cardNumberError }</div>}
+        <div className="field-control">
+          <label htmlFor="cardNumber">Card Number</label>
+          <input type="text" id="cardNumber" value={this.state.cardNumber} onChange={ this.handleChange }/>
+          { this.state.cardNumberError && <div className="field-error">{ this.state.cardNumberError }</div>}
+        </div>
 
-        <label htmlFor="expDate">Expiration Date</label>
-        <input type="text" id="expDate" value={this.state.expDate} onChange={ this.handleChange }/>
-        { this.state.expDateError && <div>{ this.state.expDateError }</div>}
+        <div className="field-control">
+          <label htmlFor="expDate">Expiration Date</label>
+          <input type="text" id="expDate" value={this.state.expDate} onChange={ this.handleChange }/>
+          { this.state.expDateError && <div className="field-error">{ this.state.expDateError }</div>}
+        </div>
         
-        <label htmlFor="cvv">CVV</label>
-        <input type="text" id="cvv" value={this.state.cvv} onChange={ this.handleChange }/>
-        { this.state.cvvError && <div>{ this.state.cvvError }</div>}
-        <button>Submit</button>
+        <div className="field-control">
+          <label htmlFor="cvv">CVV</label>
+          <input type="text" id="cvv" value={this.state.cvv} onChange={ this.handleChange }/>
+          { this.state.cvvError && <div className="field-error">{ this.state.cvvError }</div>}
+        </div>
+        <button className="submit-form-btn">Submit</button>
       </form>
 
     return (
-      <div>{ showForm }</div>
+      <div className="PaymentForm">{ showForm }</div>
     );
   }
 }
